@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import  { useEffect } from "react";
 import { API_KEY } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { addCityInfo } from "../utils/citySlice";
@@ -8,7 +8,7 @@ const useWeather = () => {
   const dispatch = useDispatch()
   const getWeather = async () => {
     const data = fetch(
-      "https://api.openweathermap.org/data/2.5/weather?q=" +
+      "https://api.openweathermap.org/data/2.5/weather?units=metric&q=" +
         city +
         "&appid=" +
         API_KEY

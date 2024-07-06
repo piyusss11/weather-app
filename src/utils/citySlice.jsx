@@ -6,7 +6,7 @@ const citySlice = createSlice({
     currentCity: "delhi",
     cityInfo: null,
     cities: [],
-    defaultCities: ["delhi", "new York", "berlin", "lodon", "cape town"],
+    defaultCities: ["delhi", "new York", "berlin", "london", "cape town"],
   },
   reducers: {
     addCity: (state, action) => {

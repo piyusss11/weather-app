@@ -13,9 +13,9 @@ import { addCity } from "../utils/citySlice";
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  backgroundColor: alpha(theme.palette.common.white, 0.05),
   "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
+    backgroundColor: alpha(theme.palette.common.white, 0.1),
   },
   marginLeft: 0,
   width: "100%",
@@ -23,6 +23,7 @@ const Search = styled("div")(({ theme }) => ({
     marginLeft: theme.spacing(1),
     width: "50%",
   },
+  transition: "background-color 0.3s ease",
 }));
 
 const SearchIconWrapper = styled("div")(({ theme }) => ({
@@ -33,6 +34,7 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
+  color: theme.palette.grey[700],
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
@@ -40,7 +42,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   width: "100%",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create("width"),
     [theme.breakpoints.up("sm")]: {
@@ -53,42 +54,42 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function NavBar() {
-    const dispatch = useDispatch()
-    const cityRef = React.useRef();
-  
-    const handleSearch = () => {
-      const city = cityRef.current.value
-      console.log(city);
-      dispatch(addCity(city))
-    };
-  
-    return (
-      <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
-          <Toolbar>
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
-            >
-              Weather App
-            </Typography>
-            <Search>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                inputRef={cityRef}
-                placeholder="Search…"
-                inputProps={{ "aria-label": "search" }}
-              />
-            </Search>
-            <Button color="inherit" onClick={handleSearch}>
-              Search
-            </Button>
-          </Toolbar>
-        </AppBar>
-      </Box>
-    );
-  }
+  const dispatch = useDispatch();
+  const cityRef = React.useRef();
+
+  const handleSearch = () => {
+    const city = cityRef.current.value;
+    console.log(city);
+    dispatch(addCity(city));
+  };
+
+  return (
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar sx={{ backgroundColor: "#333", color: "white" }} position="static">
+        <Toolbar>
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ flexGrow: 1, display: { xs: "none", sm: "block" }, fontFamily: "'Roboto', sans-serif", fontWeight: 300 }}
+          >
+            Weather App
+          </Typography>
+          <Search>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              inputRef={cityRef}
+              placeholder="Search…"
+              inputProps={{ "aria-label": "search" }}
+            />
+          </Search>
+          <Button sx={{ marginLeft: 2, borderRadius: '20px', backgroundColor: "#67FF88", color: "black", fontWeight: 'bold', textTransform: 'none' }} onClick={handleSearch}>
+            Search
+          </Button>
+        </Toolbar>
+      </AppBar>
+    </Box>
+  );
+}

@@ -1,12 +1,14 @@
-import React from 'react'
-import LeftCard from './LeftCard'
+import LeftCard from "./LeftCard";
+import RightCard from "./RightCard";
 
 const MainContainer = () => {
   return (
-    <div>
-      <LeftCard/>
-    </div>
-  )
-}
+    <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
+      <LeftCard />
 
-export default MainContainer
+      <RightCard />
+    </div>
+  );
+};
+
+export default MainContainer;
