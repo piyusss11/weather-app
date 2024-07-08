@@ -4,6 +4,8 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { useSelector } from "react-redux";
+import FiveDaysCard from "./FiveDaysCard";
+import Graph from "./Graph";
 
 const LeftCard = () => {
   const cityInfo = useSelector((store) => store.city?.cityInfo);
@@ -13,9 +15,9 @@ const LeftCard = () => {
       <Box
         sx={{
           minWidth: 275,
-          maxWidth: 500,
+          maxWidth: 900,
           paddingX: 2,
-          height: "40%",
+          height: "50%",
           mt: 4,
           display: "flex",
           justifyContent: "center",
@@ -42,17 +44,33 @@ const LeftCard = () => {
 
   const { name, main, weather, wind } = cityInfo;
 
+  const weatherDescription = weather?.[0]?.description || "Unknown"; // Ensure weather array exists and has at least one item
+
+  const currentTime = new Date().toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  }); // Get current time
+
   return (
-    <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        width: "100%",
+      }}
+    >
       <Box
         sx={{
-          minWidth: 275,
-          maxWidth: 500,
+          minWidth: 600,
+          maxWidth: 900,
           paddingX: 2,
-          height: "40%",
           mt: 4,
         }}
       >
+        <Typography sx={{ fontSize: 32, textAlign: "center", mb: 4 }}>
+          Searched City
+        </Typography>
         <Card
           sx={{
             background: "linear-gradient(360deg, #333, #444)",
@@ -78,31 +96,34 @@ const LeftCard = () => {
               component="div"
               sx={{ display: "flex", alignItems: "center" }}
             >
-              <img
-                src={`https://openweathermap.org/img/wn/${weather[0]?.icon}@2x.png`}
-                alt={weather[0]?.description}
-                style={{
-                  marginRight: "10px",
-                  backgroundColor: "white",
-                  borderRadius: "50%",
-                }}
-              />
+              {weather?.[0]?.icon && (
+                <img
+                  src={`https://openweathermap.org/img/wn/${weather[0]?.icon}@2x.png`}
+                  alt={weatherDescription}
+                  style={{
+                    marginRight: "10px",
+                    backgroundColor: "white",
+                    borderRadius: "50%",
+                  }}
+                />
+              )}
               {main?.temp}°C
             </Typography>
             <Typography
               sx={{ mb: 1.5, textAlign: "center", fontWeight: 300 }}
               color="white"
             >
-              {weather[0]?.main}
+              {weatherDescription}
               <br />
-              {weather[0]?.description === weather[0]?.main
+              {weather?.[0]?.description === weatherDescription
                 ? ""
-                : weather[0]?.description}
+                : weather?.[0]?.description}
             </Typography>
             <Box
               sx={{
                 display: "flex",
                 justifyContent: "space-between",
+                alignItems: "center",
                 gap: "20px",
                 width: "100%",
                 mt: 2,
@@ -126,6 +147,14 @@ const LeftCard = () => {
                 sx={{ fontSize: 20, textAlign: "center", fontWeight: 300 }}
                 variant="body2"
               >
+                {currentTime}
+                <br />
+                <small>Local Time</small>
+              </Typography>
+              <Typography
+                sx={{ fontSize: 20, textAlign: "center", fontWeight: 300 }}
+                variant="body2"
+              >
                 <img width={36} src="/images/wind.png" alt="wind icon" />
                 <br />
                 {wind?.speed} km/hr
@@ -136,6 +165,13 @@ const LeftCard = () => {
           </CardContent>
         </Card>
       </Box>
+      <Box
+        sx={{ mt: 4, width: "80%", display: "flex", justifyContent: "center" }}
+      >
+        <FiveDaysCard />
+      </Box>
+
+      <Graph />
     </div>
   );
 };

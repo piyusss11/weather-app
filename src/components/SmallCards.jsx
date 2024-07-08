@@ -28,17 +28,17 @@ const SmallCards = ({ city }) => {
 
   const cardStyles = {
     background: "linear-gradient(360deg, #333, #444)",
-    width: '100%',  // Adjust width to take full width in landscape
-    height: '220px', // Adjust height as needed
+    width: '100%',  
+    height: '220px', 
     borderRadius: '12px',
     mt:"20px",
     display: 'flex', 
-    flexDirection: 'row', // Landscape orientation
+    flexDirection: 'row', 
     alignItems: 'center', 
     justifyContent: 'space-between', 
     padding: '20px',
     boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
-    color: 'white', // Ensuring text color matches the style
+    color: 'white', 
   };
 
   return (
@@ -79,7 +79,7 @@ const SmallCards = ({ city }) => {
               {weatherInfo.weather[0]?.description === weatherInfo.weather[0]?.main ? "" : weatherInfo.weather[0]?.description}
             </Typography>
           </CardContent>
-          <CardContent sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "space-between", gap: "10px" }}>
+          <CardContent sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "space-between", gap: "10px" ,pt:4}}>
             <Typography sx={{ fontSize: 20, textAlign: "center" }} variant="body2">
               <img width={40} src="/images/humidity.png" alt="humidity icon" />
               <br />

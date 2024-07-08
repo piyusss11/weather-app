@@ -7,8 +7,9 @@ import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import Button from "@mui/material/Button";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addCity } from "../utils/citySlice";
+import { Paper } from "@mui/material";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -53,29 +54,57 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
+const SuggestionsContainer = styled(Paper)(({ theme }) => ({
+  position: "fixed",
+  right: "7%",
+  backgroundColor: theme.palette.background.paper,
+  width: "48%", // Adjust width as needed
+  padding: theme.spacing(2),
+  borderRadius: theme.shape.borderRadius,
+  border: `1px solid ${theme.palette.grey[100]}`, // Replace with your desired border color
+}));
+
 export default function NavBar() {
+  const searchCities = useSelector((store) => store.city.searchCities || []);
+  const cities = React.useMemo(() => searchCities.slice(0, 5), [searchCities]);
+  const [showSuggestions, setShowSuggestions] = React.useState(false);
+
+  // console.log(cities);
+
   const dispatch = useDispatch();
   const cityRef = React.useRef();
 
   const handleSearch = () => {
     const city = cityRef.current.value;
-    console.log(city);
+    // console.log(city);
     dispatch(addCity(city));
   };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar sx={{ backgroundColor: "#333", color: "white" }} position="static">
+      <AppBar
+        sx={{ backgroundColor: "#333", color: "white" }}
+        position="static"
+      >
         <Toolbar>
           <Typography
             variant="h6"
             noWrap
             component="div"
-            sx={{ flexGrow: 1, display: { xs: "none", sm: "block" }, fontFamily: "'Roboto', sans-serif", fontWeight: 300 }}
+            sx={{
+              flexGrow: 1,
+              display: { xs: "none", sm: "block" },
+              fontFamily: "'Roboto', sans-serif",
+              fontWeight: 300,
+            }}
           >
             Weather App
           </Typography>
-          <Search>
+          <Search
+            onFocus={() => setShowSuggestions(true)}
+            // onMouseOver={() => setShowSuggestions(true)}
+            // onMouseLeave={() => setShowSuggestions(false)}
+          >
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
@@ -85,11 +114,41 @@ export default function NavBar() {
               inputProps={{ "aria-label": "search" }}
             />
           </Search>
-          <Button sx={{ marginLeft: 2, borderRadius: '20px', backgroundColor: "#67FF88", color: "black", fontWeight: 'bold', textTransform: 'none' }} onClick={handleSearch}>
+          <Button
+            sx={{
+              marginLeft: 2,
+              borderRadius: "20px",
+              backgroundColor: "#67FF88",
+              color: "black",
+              fontWeight: "bold",
+              textTransform: "none",
+            }}
+            onClick={handleSearch}
+          >
             Search
           </Button>
         </Toolbar>
       </AppBar>
+      {showSuggestions && (
+        <SuggestionsContainer elevation={3}>
+          {/* <div><b>Last 5 cities you searched</b></div> <br /> */}
+
+          {cities.map((list, index) => (
+            <Box
+              onClick={() => {
+                dispatch(addCity(list));
+                setShowSuggestions(false);
+              }}
+              onMouseOver={() => setShowSuggestions(true)}
+              onMouseLeave={() => setShowSuggestions(false)}
+              key={index}
+              sx={{ py: 1, cursor: "pointer" }}
+            >
+              {list}
+            </Box>
+          ))}
+        </SuggestionsContainer>
+      )}
     </Box>
   );
 }

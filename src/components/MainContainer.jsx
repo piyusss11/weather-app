@@ -1,4 +1,5 @@
 import LeftCard from "./LeftCard";
+
 import RightCard from "./RightCard";
 
 const MainContainer = () => {
