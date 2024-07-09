@@ -14,6 +14,7 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router";
 import { addUser, removeUser } from "../utils/userSlice";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -163,31 +164,33 @@ export default function NavBar() {
             sx={{
               marginLeft: 2,
               borderRadius: "20px",
-              backgroundColor: "#fff",
-              color: "black",
+              backgroundColor: "#333",
+              color: "white",
               textTransform: "none",
               "&:hover": {
-                color: "white",
+                color: "black",
+                backgroundColor:"white",
               },
             }}
             onClick={handleSearch}
           >
             Search
           </Button>
-          <Button
+
+          <LogoutIcon
             onClick={handleClick}
             sx={{
               marginLeft: 2,
-              backgroundColor: "#fff",
-              color: "black",
+              backgroundColor: "#333",
+              color: "white",
               textTransform: "none",
+              transition:300,
               "&:hover": {
-                color: "white",
+                cursor:"pointer",
+                scale:"1.2",
               },
             }}
-          >
-            Sign Out
-          </Button>
+          />
         </Toolbar>
       </AppBar>
       {showSuggestions && (

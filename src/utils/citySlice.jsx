@@ -12,13 +12,15 @@ const citySlice = createSlice({
   reducers: {
     addCity: (state, action) => {
       const newCity = action.payload.trim(); // will do trim the spaces
-      if (newCity && !state.searchCities.includes(newCity)) {
+      if (newCity) {
         state.currentCity = newCity;
-        state.searchCities.unshift(newCity);
+        if (!state.searchCities.includes(newCity)) {
+          state.searchCities.unshift(newCity);
+        }
         state.searchCities = state.searchCities.slice(0, 10); // limit the array size to 10 items so the browser doesnt hang
         state.searchCities = state.searchCities.filter(
           (city) => city.trim() !== "" // remove empty strings if you put any by default
-        ); 
+        );
       }
     },
     addCityInfo: (state, action) => {
