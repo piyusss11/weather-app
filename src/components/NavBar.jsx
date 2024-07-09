@@ -58,10 +58,10 @@ const SuggestionsContainer = styled(Paper)(({ theme }) => ({
   position: "fixed",
   right: "7%",
   backgroundColor: theme.palette.background.paper,
-  width: "48%", // Adjust width as needed
+  width: "48%",
   padding: theme.spacing(2),
   borderRadius: theme.shape.borderRadius,
-  border: `1px solid ${theme.palette.grey[100]}`, // Replace with your desired border color
+  border: `1px solid ${theme.palette.grey[100]}`,
 }));
 
 export default function NavBar() {
@@ -118,10 +118,13 @@ export default function NavBar() {
             sx={{
               marginLeft: 2,
               borderRadius: "20px",
-              backgroundColor: "#67FF88",
+              backgroundColor: "#fff",
               color: "black",
               fontWeight: "bold",
               textTransform: "none",
+              "&:hover": {
+                color: "white",
+              },
             }}
             onClick={handleSearch}
           >
