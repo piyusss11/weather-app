@@ -3,14 +3,11 @@ import Typography from "@mui/material/Typography";
 import { Button } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { addCity } from "../utils/citySlice";
-import { useNavigate } from "react-router";
 
-const ErrorComponent = () => {
+const ErrorCity = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate()
   const handleRefresh = () => {
     dispatch(addCity("mumbai"));
-    navigate("/")
     // window.location.reload(); // Refresh the page
   };
 
@@ -27,12 +24,10 @@ const ErrorComponent = () => {
     >
       <div>
         <Typography variant="h3" gutterBottom>
-          Error
+          City Not Found
         </Typography>
-        <Typography variant="h5" gutterBottom>
-          An unexpected error occurred.
-          <br /> 
-          Refresh or Please try again later.
+        <Typography variant="body1" gutterBottom>
+          The City you requested could not be found.
         </Typography>
         <Button variant="contained" color="primary" onClick={handleRefresh}>
           Go Back
@@ -42,4 +37,4 @@ const ErrorComponent = () => {
   );
 };
 
-export default ErrorComponent;
+export default ErrorCity;

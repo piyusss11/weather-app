@@ -32,7 +32,7 @@ const SmallCards = ({ city }) => {
     height: "150px",
     borderRadius: "12px",
     alignItems: "center",
-    justifyContent:"center",
+    justifyContent: "center",
     padding: "10px",
     boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
     color: "white",
@@ -83,7 +83,11 @@ const SmallCards = ({ city }) => {
               alignItems: "center",
               color: "white",
               gap: "20px",
-              mt:"-14px",
+              mt: "-14px",
+              transitionDuration: "300ms",
+              "&:hover": {
+                scale: "0.9",
+              },
             }}
           >
             <img

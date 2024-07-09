@@ -1,14 +1,13 @@
-import NavBar from "./components/NavBar";
+
 import { Provider } from "react-redux";
 import appStore from "./utils/appStore";
-import HomePage from "./pages/HomePage"
-
-
+import Body from "./pages/Body";
 function App() {
+
   return (
     <>
       <Provider store={appStore}>
-        <HomePage/>
+        <Body/>
       </Provider>
     </>
   );

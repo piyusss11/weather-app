@@ -10,6 +10,10 @@ import Button from "@mui/material/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { addCity } from "../utils/citySlice";
 import { Paper } from "@mui/material";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { auth } from "../utils/firebase";
+import { useNavigate } from "react-router";
+import { addUser, removeUser } from "../utils/userSlice";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -56,12 +60,16 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 const SuggestionsContainer = styled(Paper)(({ theme }) => ({
   position: "fixed",
-  right: "7%",
+  zIndex: 10,
+  right: "13%",
   backgroundColor: theme.palette.background.paper,
   width: "48%",
   padding: theme.spacing(2),
   borderRadius: theme.shape.borderRadius,
   border: `1px solid ${theme.palette.grey[100]}`,
+  [theme.breakpoints.down("md")]: {
+    display: "none",
+  },
 }));
 
 export default function NavBar() {
@@ -72,6 +80,7 @@ export default function NavBar() {
   // console.log(cities);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const cityRef = React.useRef();
 
   const handleSearch = () => {
@@ -79,6 +88,42 @@ export default function NavBar() {
     // console.log(city);
     dispatch(addCity(city));
   };
+
+  const handleClick = () => {
+    signOut(auth)
+      .then(() => {
+        navigate("/");
+        dispatch(removeUser());
+        // Sign-out successful.
+      })
+      .catch((error) => {
+        // An error happened.
+        navigate("/error");
+      });
+  };
+  React.useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/auth.user
+        const { uid, email, displayName } = user;
+        dispatch(
+          addUser({
+            uid: uid,
+            email: email,
+            displayName: displayName,
+          })
+        );
+        navigate("/browse");
+        // ...
+      } else {
+        dispatch(removeUser());
+        navigate("/");
+        // User is signed out
+        // ...
+      }
+    });
+  }, [dispatch, navigate]);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -120,7 +165,6 @@ export default function NavBar() {
               borderRadius: "20px",
               backgroundColor: "#fff",
               color: "black",
-              fontWeight: "bold",
               textTransform: "none",
               "&:hover": {
                 color: "white",
@@ -129,6 +173,20 @@ export default function NavBar() {
             onClick={handleSearch}
           >
             Search
+          </Button>
+          <Button
+            onClick={handleClick}
+            sx={{
+              marginLeft: 2,
+              backgroundColor: "#fff",
+              color: "black",
+              textTransform: "none",
+              "&:hover": {
+                color: "white",
+              },
+            }}
+          >
+            Sign Out
           </Button>
         </Toolbar>
       </AppBar>

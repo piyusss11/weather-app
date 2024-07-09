@@ -24,8 +24,8 @@ const Graph = () => {
     temp: fiveDayTemp[index] ,
   }));
 
-  console.log(fiveDayTemp);
-  console.log(fiveDayDate);
+  // console.log(fiveDayTemp);
+  // console.log(fiveDayDate);
 
   return (
 

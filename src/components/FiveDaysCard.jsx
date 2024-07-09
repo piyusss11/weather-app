@@ -40,7 +40,7 @@ const FiveDaysCard = () => {
   return (
     <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, mt: 4, justifyContent: 'center' }}>
       {days.map((day, index) => (
-        <Card key={index} sx={{ minWidth: 200, maxWidth: 250, textAlign: 'center', background: '#f8f9fa', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)', padding: 2,"&:hover": {
+        <Card key={index} sx={{  transitionDuration: "300ms",minWidth: 200, maxWidth: 250, textAlign: 'center', background: '#f8f9fa', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)', padding: 2,"&:hover": {
                 scale: "0.9",
               }, }}>
           <CardContent>
